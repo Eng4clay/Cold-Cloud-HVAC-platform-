@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الخدمات - السحابة الباردة</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-icon">❄️</div>
+                <span class="logo-text">السحابة الباردة</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="services.html" class="nav-link active">الخدمات</a>
+                </li>
+                <li class="nav-item">
+                    <a href="library.html" class="nav-link">المكتبة</a>
+                </li>
+                <li class="nav-item">
+                    <a href="calculations.html" class="nav-link">الحسابات</a>
+                </li>
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link">لوحة التحكم</a>
+                </li>
+            </ul>
+
+            <div class="nav-buttons">
+                <a href="login.html" class="btn btn-outline">تسجيل الدخول</a>
+                <a href="register.html" class="btn btn-primary">إنشاء حساب</a>
+            </div>
+
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- هيدر الصفحة -->
+    <section class="page-header">
+        <div class="container">
+            <h1>خدماتنا المتكاملة</h1>
+            <p>نقدم مجموعة شاملة من الخدمات الاحترافية في مجال التدفئة والتهوية وتكييف الهواء</p>
+        </div>
+    </section>
+
+    <!-- قسم الخدمات الرئيسية -->
+    <section class="services-main">
+        <div class="container">
+            <div class="services-categories">
+                <div class="category-card" id="maintenance">
+                    <div class="category-icon">
+                        <i class="fas fa-toolbox"></i>
+                    </div>
+                    <h2>الصيانة الوقائية</h2>
+                    <p>برامج صيانة دورية مخططة للحفاظ على كفاءة الأنظمة ومنع الأعطال</p>
+                    
+                    <div class="service-details">
+                        <h3>المزايا الرئيسية:</h3>
+                        <ul class="benefits-list">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>زيادة عمر الجهاز الافتراضي</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>توفير في استهلاك الطاقة</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>منع الأعطال المفاجئة</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>الحفاظ على كفاءة النظام</span>
+                            </li>
+                        </ul>
+
+                        <h3>باقات الصيانة:</h3>
+                        <div class="maintenance-plans">
+                            <div class="plan-card">
+                                <h4>الباقة الأساسية</h4>
+                                <div class="plan-price">500 ريال/سنوياً</div>
+                                <ul>
+                                    <li>4 زيارات صيانة سنوية</li>
+                                    <li>فحص شامل للأجهزة</li>
+                                    <li>تنظيف الفلاتر</li>
+                                    <li>تقرير فني مفصل</li>
+                                </ul>
+                                <button class="btn btn-primary">اختيار الباقة</button>
+                            </div>
+                            <div class="plan-card featured">
+                                <div class="plan-badge">الأكثر طلباً</div>
+                                <h4>الباقة المتقدمة</h4>
+                                <div class="plan-price">800 ريال/سنوياً</div>
+                                <ul>
+                                    <li>6 زيارات صيانة سنوية</li>
+                                    <li>فحص شامل ومتقدم</li>
+                                    <li>تنظيف كامل للنظام</li>
+                                    <li>أولوية في خدمة الطوارئ</li>
+                                    <li>تقارير أداء شهرية</li>
+                                </ul>
+                                <button class="btn btn-primary">اختيار الباقة</button>
+                            </div>
+                            <div class="plan-card">
+                                <h4>الباقة الشاملة</h4>
+                                <div class="plan-price">1200 ريال/سنوياً</div>
+                                <ul>
+                                    <li>12 زيارة صيانة سنوية</li>
+                                    <li>فحص شامل ومتقدم</li>
+                                    <li>صيانة وقائية كاملة</li>
+                                    <li>أولوية مطلقة في الخدمة</li>
+                                    <li>تقارير أداء أسبوعية</li>
+                                    <li>خدمة الطوارئ مجانية</li>
+                                </ul>
+                                <button class="btn btn-primary">اختيار الباقة</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-card" id="repair">
+                    <div class="category-icon">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <h2>إصلاح الأعطال</h2>
+                    <p>خدمات إصلاح سريعة ومهنية للطوارئ والأعطال المفاجئة</p>
+                    
+                    <div class="service-details">
+                        <h3>أنواع الأعطال التي نقوم بإصلاحها:</h3>
+                        <div class="repair-types">
+                            <div class="repair-type">
+                                <h4>أعطال كهربائية</h4>
+                                <ul>
+                                    <li>مشاكل في اللوحات الكهربائية</li>
+                                    <li>أعطال في الكابلات والوصلات</li>
+                                    <li>مشاكل في نظام التحكم</li>
+                                </ul>
+                            </div>
+                            <div class="repair-type">
+                                <h4>أعطال ميكانيكية</h4>
+                                <ul>
+                                    <li>أعطال الضواغط والمحركات</li>
+                                    <li>مشاكل في المرواح</li>
+                                    <li>تسريب في أنظمة التبريد</li>
+                                </ul>
+                            </div>
+                            <div class="repair-type">
+                                <h4>أعطال أدائية</h4>
+                                <ul>
+                                    <li>انخفاض كفاءة التبريد</li>
+                                    <li>ضغط غير طبيعي</li>
+                                    <li>اهتزاز وضوضاء</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="emergency-service">
+                            <div class="emergency-header">
+                                <i class="fas fa-ambulance"></i>
+                                <h3>خدمة الطوارئ</h3>
+                            </div>
+                            <p>نقدم خدمة طوارئ على مدار 24/7 للتعامل مع الأعطال الطارئة</p>
+                            <div class="emergency-contact">
+                                <div class="contact-card">
+                                    <i class="fas fa-phone"></i>
+                                    <div>
+                                        <h4>اتصل بنا الآن</h4>
+                                        <span class="phone-number">9200 12345</span>
+                                    </div>
+                                </div>
+                                <div class="contact-card">
+                                    <i class="fas fa-clock"></i>
+                                    <div>
+                                        <h4>وقت الاستجابة</h4>
+                                        <span>أقل من ساعتين</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-card" id="installation">
+                    <div class="category-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h2>التركيب والتجهيز</h2>
+                    <p>خدمات تركيب احترافية لأنظمة التبريد والتهوية الجديدة</p>
+                    
+                    <div class="service-details">
+                        <h3>خدمات التركيب:</h3>
+                        <div class="installation-services">
+                            <div class="installation-card">
+                                <h4>أنظمة التكييف المركزي</h4>
+                                <p>تركيب أنظمة التكييف المركزي للمباني والمنشآت الكبيرة</p>
+                                <div class="installation-features">
+                                    <span>تصميم النظام</span>
+                                    <span>تركيب المعدات</span>
+                                    <span>اختبار التشغيل</span>
+                                </div>
+                            </div>
+                            <div class="installation-card">
+                                <h4>وحدات التكييف المنفصلة</h4>
+                                <p>تركيب وحدات التكييف المنفصلة للمنازل والمكاتب</p>
+                                <div class="installation-features">
+                                    <span>اختيار الموقع</span>
+                                    <span>تركيب الوحدة</span>
+                                    <span>ربط الكهرباء</span>
+                                </div>
+                            </div>
+                            <div class="installation-card">
+                                <h4>أنظمة التهوية</h4>
+                                <p>تركيب أنظمة التهوية والعادم للمطابخ والحمامات</p>
+                                <div class="installation-features">
+                                    <span>تخطيط المجاري</span>
+                                    <span>تركيب المراوح</span>
+                                    <span>اختبار الكفاءة</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-card" id="consultation">
+                    <div class="category-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h2>الاستشارات الفنية</h2>
+                    <p>استشارات فنية متخصصة لتخطيط وتحسين أنظمة التبريد والتهوية</p>
+                    
+                    <div class="service-details">
+                        <h3>مجالات الاستشارة:</h3>
+                        <div class="consultation-areas">
+                            <div class="consultation-card">
+                                <h4>دراسات الجدوى</h4>
+                                <p>تحليل الجدوى الفنية والاقتصادية لمشاريع التبريد</p>
+                                <ul>
+                                    <li>تحليل التكلفة والعائد</li>
+                                    <li>مقارنة البدائل التقنية</li>
+                                    <li>توصيات التطوير</li>
+                                </ul>
+                            </div>
+                            <div class="consultation-card">
+                                <h4>المراجعة الفنية</h4>
+                                <p>مراجعة وتقييم الأنظمة القائمة واقتراح التحسينات</p>
+                                <ul>
+                                    <li>تقييم الكفاءة</li>
+                                    <li>كشف نقاط الضعف</li>
+                                    <li>خطط التحسين</li>
+                                </ul>
+                            </div>
+                            <div class="consultation-card">
+                                <h4>التدريب الفني</h4>
+                                <p>برامج تدريبية للمهندسين والفنيين في مجال HVAC</p>
+                                <ul>
+                                    <li>دورات تأهيلية</li>
+                                    <li>تدريب عملي ميداني</li>
+                                    <li>شهادات معتمدة</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم طلب الخدمة -->
+    <section class="service-request">
+        <div class="container">
+            <div class="request-container">
+                <div class="request-content">
+                    <h2>جاهز لطلب الخدمة؟</h2>
+                    <p>اختر الخدمة المناسبة واترك لنا الباقي. فريقنا الاحترافي جاهز لخدمتك.</p>
+                    <div class="request-features">
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>أسعار تنافسية</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>ضمان على الخدمة</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>فنيون معتمدون</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>خدمة ما بعد البيع</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="request-form">
+                    <h3>طلب خدمة سريع</h3>
+                    <form id="serviceRequestForm">
+                        <div class="form-group">
+                            <label for="serviceType">نوع الخدمة</label>
+                            <select id="serviceType" required>
+                                <option value="">اختر نوع الخدمة</option>
+                                <option value="maintenance">الصيانة الوقائية</option>
+                                <option value="repair">إصلاح الأعطال</option>
+                                <option value="installation">التركيب</option>
+                                <option value="consultation">الاستشارات</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">الاسم الكامل</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">رقم الهاتف</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">الموقع</label>
+                            <input type="text" id="location" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">إرسال طلب الخدمة</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <!-- نفس الفوتر السابق -->
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/services.js"></script>
+</body>
+</html>

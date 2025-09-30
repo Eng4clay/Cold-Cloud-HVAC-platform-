@@ -224,6 +224,12 @@
             margin: 1rem 0;
             border-right: 3px solid var(--primary-color);
         }
+
+        .input-hint {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 0.3rem;
+        }
     </style>
 </head>
 <body>
@@ -313,17 +319,20 @@
                 <form id="btuForm" class="calculator-form">
                     <div class="form-group">
                         <label for="roomLength">الطول (متر)</label>
-                        <input type="number" id="roomLength" step="0.1" min="1" required>
+                        <input type="number" id="roomLength" step="0.1" min="1" value="5" required>
+                        <div class="input-hint">أدخل طول الغرفة بالأمتار</div>
                     </div>
 
                     <div class="form-group">
                         <label for="roomWidth">العرض (متر)</label>
-                        <input type="number" id="roomWidth" step="0.1" min="1" required>
+                        <input type="number" id="roomWidth" step="0.1" min="1" value="4" required>
+                        <div class="input-hint">أدخل عرض الغرفة بالأمتار</div>
                     </div>
 
                     <div class="form-group">
                         <label for="roomHeight">الارتفاع (متر)</label>
-                        <input type="number" id="roomHeight" step="0.1" min="1" required>
+                        <input type="number" id="roomHeight" step="0.1" min="1" value="3" required>
+                        <div class="input-hint">أدخل ارتفاع الغرفة بالأمتار</div>
                     </div>
 
                     <div class="form-group">
@@ -331,6 +340,586 @@
                         <select id="roomType" required>
                             <option value="living">غرفة معيشة</option>
                             <option value="bedroom">غرفة نوم</option>
+                            <option value="kitchen">مطبخ</option>
+                            <option value="office">مكتب</option>
+                            <option value="commercial">تجاري</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="occupants">عدد الأشخاص</label>
+                        <input type="number" id="occupants" min="1" value="3" required>
+                        <div class="input-hint">عدد الأشخاص المعتاد في الغرفة</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="climate">المناخ</label>
+                        <select id="climate" required>
+                            <option value="hot">حار</option>
+                            <option value="moderate" selected>معتدل</option>
+                            <option value="cold">بارد</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sunExposure">التعرض للشمس</label>
+                        <select id="sunExposure" required>
+                            <option value="low">قليل</option>
+                            <option value="medium" selected>متوسط</option>
+                            <option value="high">كثير</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="insulation">العزل الحراري</label>
+                        <select id="insulation" required>
+                            <option value="poor">ضعيف</option>
+                            <option value="average" selected>متوسط</option>
+                            <option value="good">جيد</option>
+                        </select>
+                    </div>
+                </form>
+
+                <div class="form-actions">
+                    <button type="button" onclick="calculateBTU()" class="btn btn-primary btn-large">
+                        <i class="fas fa-calculator"></i>
+                        احسب BTU
+                    </button>
+                    <button type="button" onclick="resetBTUForm()" class="btn btn-outline">
+                        <i class="fas fa-redo"></i>
+                        إعادة تعيين
+                    </button>
+                </div>
+
+                <!-- النتائج -->
+                <div id="btuResults" class="results-section">
+                    <h3>نتائج الحساب</h3>
+                    <div class="result-card">
+                        <div class="result-value" id="btuResult">0 BTU</div>
+                        <div class="result-label">إجمالي احتياجات التبريد</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-value" id="tonnageResult">0 طن</div>
+                        <div class="result-label">السعة المطلوبة بالطن</div>
+                    </div>
+
+                    <div class="recommendations">
+                        <h4>التوصيات</h4>
+                        <p id="btuRecommendations">سيتم عرض التوصيات هنا بعد الحساب</p>
+                    </div>
+
+                    <div class="formula-info">
+                        <h4>معلومة عن المعادلة</h4>
+                        <p>تعتمد الحسابات على المعادلة القياسية:</p>
+                        <div class="formula">
+                            BTU = (الطول × العرض × الارتفاع) × عامل التصحيح × 1.5 + (عدد الأشخاص × 600)
+                        </div>
+                        <p>حيث يختلف عامل التصحيح بناءً على نوع الغرفة والمناخ والعوامل الأخرى.</p>
+                    </div>
+
+                    <button class="save-calculation" onclick="saveCalculation('btu')">
+                        <i class="fas fa-save"></i>
+                        حفظ الحساب
+                    </button>
+                </div>
+            </div>
+
+            <!-- سجل الحسابات -->
+            <div class="history-section">
+                <h3>سجل حسابات BTU السابقة</h3>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>التاريخ</th>
+                            <th>المساحة</th>
+                            <th>نوع الغرفة</th>
+                            <th>BTU</th>
+                            <th>الطن</th>
+                        </tr>
+                    </thead>
+                    <tbody id="btuHistory">
+                        <!-- سيتم تعبئته بالبيانات من JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- حاسبة CFM -->
+    <section id="cfm-calc" class="calculator-section">
+        <div class="container">
+            <div class="calculator-container">
+                <div class="calculator-header">
+                    <h2>حاسبة CFM (قدم مكعب في الدقيقة)</h2>
+                    <p>احسب معدل تدفق الهواء المطلوب للمساحة بناءً على حجم الغرفة ومعدل تغيير الهواء</p>
+                </div>
+
+                <form id="cfmForm" class="calculator-form">
+                    <div class="form-group">
+                        <label for="cfmVolume">حجم الغرفة (قدم مكعب)</label>
+                        <input type="number" id="cfmVolume" step="0.1" min="1" value="1000" required>
+                        <div class="input-hint">الحجم الإجمالي للغرفة بالأقدام المكعبة</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="airChanges">معدل تغيير الهواء (ACH)</label>
+                        <input type="number" id="airChanges" step="0.1" min="1" value="6" required>
+                        <div class="input-hint">عدد مرات تغيير الهواء في الساعة</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="roomUsage">استخدام الغرفة</label>
+                        <select id="roomUsage" required>
+                            <option value="residential">سكني</option>
+                            <option value="office">مكتب</option>
+                            <option value="commercial">تجاري</option>
+                            <option value="industrial">صناعي</option>
+                        </select>
+                    </div>
+                </form>
+
+                <div class="form-actions">
+                    <button type="button" onclick="calculateCFM()" class="btn btn-primary btn-large">
+                        <i class="fas fa-calculator"></i>
+                        احسب CFM
+                    </button>
+                    <button type="button" onclick="resetCFMForm()" class="btn btn-outline">
+                        <i class="fas fa-redo"></i>
+                        إعادة تعيين
+                    </button>
+                </div>
+
+                <div id="cfmResults" class="results-section">
+                    <h3>نتائج الحساب</h3>
+                    <div class="result-card">
+                        <div class="result-value" id="cfmResult">0 CFM</div>
+                        <div class="result-label">معدل تدفق الهواء المطلوب</div>
+                    </div>
+
+                    <div class="formula-info">
+                        <h4>معلومة عن المعادلة</h4>
+                        <div class="formula">
+                            CFM = (حجم الغرفة × معدل تغيير الهواء) ÷ 60
+                        </div>
+                        <p>هذه المعادلة تحسب معدل تدفق الهواء المطلوب للحفاظ على جودة الهواء في المساحة.</p>
+                    </div>
+
+                    <button class="save-calculation" onclick="saveCalculation('cfm')">
+                        <i class="fas fa-save"></i>
+                        حفظ الحساب
+                    </button>
+                </div>
+            </div>
+
+            <!-- سجل حسابات CFM -->
+            <div class="history-section">
+                <h3>سجل حسابات CFM السابقة</h3>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>التاريخ</th>
+                            <th>الحجم</th>
+                            <th>ACH</th>
+                            <th>CFM</th>
+                            <th>الاستخدام</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cfmHistory">
+                        <!-- سيتم تعبئته بالبيانات من JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- حاسبة ACH -->
+    <section id="ach-calc" class="calculator-section">
+        <div class="container">
+            <div class="calculator-container">
+                <div class="calculator-header">
+                    <h2>حاسبة ACH (معدل تغيير الهواء)</h2>
+                    <p>احسب معدل تغيير الهواء في الساعة بناءً على تدفق الهواء وحجم الغرفة</p>
+                </div>
+
+                <form id="achForm" class="calculator-form">
+                    <div class="form-group">
+                        <label for="achCFM">معدل تدفق الهواء (CFM)</label>
+                        <input type="number" id="achCFM" step="0.1" min="1" value="500" required>
+                        <div class="input-hint">معدل تدفق الهواء بالأقدام المكعبة في الدقيقة</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="achVolume">حجم الغرفة (قدم مكعب)</label>
+                        <input type="number" id="achVolume" step="0.1" min="1" value="3000" required>
+                        <div class="input-hint">الحجم الإجمالي للغرفة بالأقدام المكعبة</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="achRoomType">نوع المساحة</label>
+                        <select id="achRoomType" required>
+                            <option value="residential">سكني</option>
+                            <option value="office">مكتب</option>
+                            <option value="commercial">تجاري</option>
+                            <option value="medical">طبي</option>
+                            <option value="industrial">صناعي</option>
+                        </select>
+                    </div>
+                </form>
+
+                <div class="form-actions">
+                    <button type="button" onclick="calculateACH()" class="btn btn-primary btn-large">
+                        <i class="fas fa-calculator"></i>
+                        احسب ACH
+                    </button>
+                    <button type="button" onclick="resetACHForm()" class="btn btn-outline">
+                        <i class="fas fa-redo"></i>
+                        إعادة تعيين
+                    </button>
+                </div>
+
+                <div id="achResults" class="results-section">
+                    <h3>نتائج الحساب</h3>
+                    <div class="result-card">
+                        <div class="result-value" id="achResult">0 ACH</div>
+                        <div class="result-label">معدل تغيير الهواء في الساعة</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-value" id="achEvaluation">-</div>
+                        <div class="result-label">تقييم المعدل</div>
+                    </div>
+
+                    <div class="formula-info">
+                        <h4>معلومة عن المعادلة</h4>
+                        <div class="formula">
+                            ACH = (CFM × 60) ÷ حجم الغرفة
+                        </div>
+                        <p>المعدلات الموصى بها:
+                            <br>• سكني: 4-6 ACH
+                            <br>• مكاتب: 6-8 ACH  
+                            <br>• تجاري: 8-12 ACH
+                            <br>• طبي: 12-20 ACH
+                            <br>• صناعي: 20+ ACH
+                        </p>
+                    </div>
+
+                    <button class="save-calculation" onclick="saveCalculation('ach')">
+                        <i class="fas fa-save"></i>
+                        حفظ الحساب
+                    </button>
+                </div>
+            </div>
+
+            <!-- سجل حسابات ACH -->
+            <div class="history-section">
+                <h3>سجل حسابات ACH السابقة</h3>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>التاريخ</th>
+                            <th>CFM</th>
+                            <th>الحجم</th>
+                            <th>ACH</th>
+                            <th>التقييم</th>
+                        </tr>
+                    </thead>
+                    <tbody id="achHistory">
+                        <!-- سيتم تعبئته بالبيانات من JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- حاسبة المجاري -->
+    <section id="duct-calc" class="calculator-section">
+        <div class="container">
+            <div class="calculator-container">
+                <div class="calculator-header">
+                    <h2>حاسبة مقاسات مجاري الهواء</h2>
+                    <p>احسب المقاسات المناسبة لمجاري الهواء بناءً على معدل تدفق الهواء والسرعة</p>
+                </div>
+
+                <form id="ductForm" class="calculator-form">
+                    <div class="form-group">
+                        <label for="ductCFM">معدل تدفق الهواء (CFM)</label>
+                        <input type="number" id="ductCFM" step="0.1" min="1" value="800" required>
+                        <div class="input-hint">معدل تدفق الهواء المطلوب</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="airVelocity">سرعة الهواء (FPM)</label>
+                        <input type="number" id="airVelocity" step="0.1" min="100" max="2000" value="900" required>
+                        <div class="input-hint">سرعة الهواء بالأقدام في الدقيقة (600-900 للمجاري الرئيسية، 900-1200 للفرعية)</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ductType">نوع المجرى</label>
+                        <select id="ductType" required>
+                            <option value="round">دائري</option>
+                            <option value="rectangular">مستطيل</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="aspectRatioGroup" style="display: none;">
+                        <label for="aspectRatio">نسبة الأبعاد (العرض:الارتفاع)</label>
+                        <select id="aspectRatio">
+                            <option value="1">1:1 (مربع)</option>
+                            <option value="1.5" selected>1.5:1</option>
+                            <option value="2">2:1</option>
+                            <option value="2.5">2.5:1</option>
+                            <option value="3">3:1</option>
+                        </select>
+                    </div>
+                </form>
+
+                <div class="form-actions">
+                    <button type="button" onclick="calculateDuctSize()" class="btn btn-primary btn-large">
+                        <i class="fas fa-calculator"></i>
+                        احسب المقاسات
+                    </button>
+                    <button type="button" onclick="resetDuctForm()" class="btn btn-outline">
+                        <i class="fas fa-redo"></i>
+                        إعادة تعيين
+                    </button>
+                </div>
+
+                <div id="ductResults" class="results-section">
+                    <h3>نتائج الحساب</h3>
+                    <div id="ductResultsContent">
+                        <!-- سيتم تعبئته بالنتائج من JavaScript -->
+                    </div>
+
+                    <div class="formula-info">
+                        <h4>معلومة عن المعادلة</h4>
+                        <div class="formula">
+                            للمجاري الدائرية: القطر = √(المنطقة × 144 × 4 ÷ π)
+                            <br>للمجاري المستطيلة: المنطقة = CFM ÷ السرعة
+                        </div>
+                    </div>
+
+                    <button class="save-calculation" onclick="saveCalculation('duct')">
+                        <i class="fas fa-save"></i>
+                        حفظ الحساب
+                    </button>
+                </div>
+            </div>
+
+            <!-- سجل حسابات المجاري -->
+            <div class="history-section">
+                <h3>سجل حسابات المجاري السابقة</h3>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>التاريخ</th>
+                            <th>CFM</th>
+                            <th>السرعة</th>
+                            <th>النوع</th>
+                            <th>المقاس</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ductHistory">
+                        <!-- سيتم تعبئته بالبيانات من JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- حاسبة الطاقة -->
+    <section id="energy-calc" class="calculator-section">
+        <div class="container">
+            <div class="calculator-container">
+                <div class="calculator-header">
+                    <h2>حاسبة استهلاك الطاقة والتكلفة</h2>
+                    <p>احسب استهلاك الطاقة وتكلفة التشغيل لأنظمة التكييف والتهوية</p>
+                </div>
+
+                <form id="energyForm" class="calculator-form">
+                    <div class="form-group">
+                        <label for="systemCapacity">سعة النظام (طن)</label>
+                        <input type="number" id="systemCapacity" step="0.1" min="0.5" max="100" value="3" required>
+                        <div class="input-hint">السعة الإجمالية لنظام التكييف بالأطنان</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="efficiencyRating">معامل الكفاءة (EER/COP)</label>
+                        <input type="number" id="efficiencyRating" step="0.1" min="1" max="20" value="3.5" required>
+                        <div class="input-hint">معامل كفاءة الطاقة للنظام</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dailyUsage">ساعات التشغيل اليومية</label>
+                        <input type="number" id="dailyUsage" step="0.5" min="1" max="24" value="8" required>
+                        <div class="input-hint">متوسط ساعات التشغيل في اليوم</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="operatingDays">أيام التشغيل أسبوعياً</label>
+                        <input type="number" id="operatingDays" min="1" max="7" value="7" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="electricityRate">سعر الكهرباء (ريال/ك.و.س)</label>
+                        <input type="number" id="electricityRate" step="0.01" min="0.1" value="0.18" required>
+                        <div class="input-hint">سعر الكيلوواط ساعة بالريال السعودي</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="climateZone">المنطقة المناخية</label>
+                        <select id="climateZone" required>
+                            <option value="hot">حار جداً</option>
+                            <option value="warm">حار</option>
+                            <option value="moderate">معتدل</option>
+                        </select>
+                    </div>
+                </form>
+
+                <div class="form-actions">
+                    <button type="button" onclick="calculateEnergy()" class="btn btn-primary btn-large">
+                        <i class="fas fa-calculator"></i>
+                        احسب الطاقة
+                    </button>
+                    <button type="button" onclick="resetEnergyForm()" class="btn btn-outline">
+                        <i class="fas fa-redo"></i>
+                        إعادة تعيين
+                    </button>
+                </div>
+
+                <div id="energyResults" class="results-section">
+                    <h3>نتائج الحساب</h3>
+                    <div class="result-card">
+                        <div class="result-value" id="powerConsumption">0 ك.و</div>
+                        <div class="result-label">استهلاك الطاقة</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-value" id="dailyConsumption">0 ك.و.س</div>
+                        <div class="result-label">الاستهلاك اليومي</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-value" id="monthlyCost">0 ريال</div>
+                        <div class="result-label">التكلفة الشهرية</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-value" id="yearlyCost">0 ريال</div>
+                        <div class="result-label">التكلفة السنوية</div>
+                    </div>
+
+                    <div class="recommendations">
+                        <h4>نصائح توفير الطاقة</h4>
+                        <p id="energyTips">سيتم عرض نصائح التوفير هنا بعد الحساب</p>
+                    </div>
+
+                    <div class="formula-info">
+                        <h4>معلومة عن المعادلة</h4>
+                        <div class="formula">
+                            الطاقة (ك.و) = السعة (طن) × 3.517 ÷ معامل الكفاءة
+                            <br>التكلفة = الطاقة × الساعات × الأيام × السعر
+                        </div>
+                    </div>
+
+                    <button class="save-calculation" onclick="saveCalculation('energy')">
+                        <i class="fas fa-save"></i>
+                        حفظ الحساب
+                    </button>
+                </div>
+            </div>
+
+            <!-- سجل حسابات الطاقة -->
+            <div class="history-section">
+                <h3>سجل حسابات الطاقة السابقة</h3>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>التاريخ</th>
+                            <th>السعة</th>
+                            <th>الكفاءة</th>
+                            <th>التكلفة/شهر</th>
+                            <th>المنطقة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="energyHistory">
+                        <!-- سيتم تعبئته بالبيانات من JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="logo-icon">❄️</div>
+                        <span class="logo-text">السحابة الباردة</span>
+                    </div>
+                    <p class="footer-description">
+                        منصة رائدة في تقديم حلول متكاملة في مجال التدفئة والتهوية وتكييف الهواء، 
+                        تجمع بين الخبرة التقنية والتكنولوجيا الحديثة.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>روابط سريعة</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="services.html">الخدمات</a></li>
+                        <li><a href="library.html">المكتبة</a></li>
+                        <li><a href="calculations.html">الحسابات</a></li>
+                        <li><a href="dashboard.html">لوحة التحكم</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>الخدمات</h4>
+                    <ul class="footer-links">
+                        <li><a href="services.html#maintenance">الصيانة الوقائية</a></li>
+                        <li><a href="services.html#repair">إصلاح الأعطال</a></li>
+                        <li><a href="services.html#installation">التركيب</a></li>
+                        <li><a href="services.html#consultation">الاستشارات</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>اتصل بنا</h4>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+966 50 123 4567</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@cold-cloud.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>المملكة العربية السعودية</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 السحابة الباردة. جميع الحقوق محفوظة.</p>
+                <div class="footer-bottom-links">
+                    <a href="privacy.html">سياسة الخصوصية</a>
+                    <a href="terms.html">الشروط والأحكام</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/calculations.js"></script>
+</body>
+</html>oom">غرفة نوم</option>
                             <option value="kitchen">مطبخ</option>
                             <option value="office">مكتب</option>
                             <option value="commercial">تجاري</option>

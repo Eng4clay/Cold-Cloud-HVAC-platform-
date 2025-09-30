@@ -1,1 +1,360 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - السحابة الباردة</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 2rem;
+        }
 
+        .auth-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .auth-header {
+            background: var(--gradient);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .auth-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .auth-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-subtitle {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .auth-body {
+            padding: 2rem;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-input {
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .password-input {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .forgot-password {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .auth-button {
+            background: var(--gradient);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .auth-button:hover {
+            background: var(--gradient-dark);
+            transform: translateY(-2px);
+        }
+
+        .auth-divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .auth-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            left: 0;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .auth-divider span {
+            background: white;
+            padding: 0 1rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 500;
+        }
+
+        .social-btn:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .auth-footer {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .auth-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .demo-accounts {
+            background: #fffbeb;
+            border: 1px solid #fbbf24;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .demo-accounts h4 {
+            color: #d97706;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .demo-account {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #fde68a;
+        }
+
+        .demo-account:last-child {
+            border-bottom: none;
+        }
+
+        .copy-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <div class="logo-icon">❄️</div>
+                    <span>السحابة الباردة</span>
+                </div>
+                <h1 class="auth-title">مرحباً بعودتك!</h1>
+                <p class="auth-subtitle">سجل الدخول إلى حسابك للمتابعة</p>
+            </div>
+
+            <div class="auth-body">
+                <form class="auth-form" id="loginForm">
+                    <div class="form-group">
+                        <label for="email" class="form-label">البريد الإلكتروني</label>
+                        <input type="email" id="email" class="form-input" placeholder="ادخل بريدك الإلكتروني" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">كلمة المرور</label>
+                        <div class="password-input">
+                            <input type="password" id="password" class="form-input" placeholder="ادخل كلمة المرور" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword()">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="remember">
+                            تذكرني
+                        </label>
+                        <a href="forgot-password.html" class="forgot-password">نسيت كلمة المرور؟</a>
+                    </div>
+
+                    <button type="submit" class="auth-button">
+                        <i class="fas fa-sign-in-alt"></i>
+                        تسجيل الدخول
+                    </button>
+                </form>
+
+                <div class="auth-divider">
+                    <span>أو</span>
+                </div>
+
+                <div class="social-login">
+                    <button class="social-btn">
+                        <i class="fab fa-google" style="color: #DB4437;"></i>
+                        Google
+                    </button>
+                    <button class="social-btn">
+                        <i class="fab fa-microsoft" style="color: #0078D4;"></i>
+                        Microsoft
+                    </button>
+                </div>
+
+                <!-- حسابات تجريبية -->
+                <div class="demo-accounts">
+                    <h4>حسابات تجريبية للاختبار:</h4>
+                    <div class="demo-account">
+                        <span>عميل: client@demo.com / 123456</span>
+                        <button class="copy-btn" onclick="copyCredentials('client@demo.com', '123456')">نسخ</button>
+                    </div>
+                    <div class="demo-account">
+                        <span>فني: technician@demo.com / 123456</span>
+                        <button class="copy-btn" onclick="copyCredentials('technician@demo.com', '123456')">نسخ</button>
+                    </div>
+                </div>
+
+                <div class="auth-footer">
+                    <p>ليس لديك حساب؟ <a href="register.html" class="auth-link">أنشئ حساب جديد</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.querySelector('.toggle-password i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.className = 'far fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.className = 'far fa-eye';
+            }
+        }
+
+        function copyCredentials(email, password) {
+            const text = `البريد: ${email}\nكلمة المرور: ${password}`;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('تم نسخ بيانات الدخول!');
+            });
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // محاكاة عملية الدخول
+            if (email && password) {
+                // عرض رسالة نجاح
+                ColdCloud.showNotification('تم تسجيل الدخول بنجاح!', 'success');
+                
+                // توجيه إلى لوحة التحكم بعد ثانيتين
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>

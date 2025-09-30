@@ -1,1 +1,608 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المكتبة التعليمية - السحابة الباردة</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        .library-hero {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            padding: 120px 0 60px;
+            margin-top: 80px;
+            text-align: center;
+        }
 
+        .library-filters {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--border);
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 500;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            font-size: 1rem;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .search-btn {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            border: 1px solid var(--border);
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .card-image {
+            height: 200px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-category {
+            display: inline-block;
+            background: var(--background-light);
+            color: var(--primary-color);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .card-description {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+        }
+
+        .card-stats {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .read-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .read-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+
+        .page-btn {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .page-btn.active,
+        .page-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .content-detail {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .detail-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .detail-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .content-body {
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .content-body h3 {
+            color: var(--text-dark);
+            margin: 2rem 0 1rem;
+        }
+
+        .content-body p {
+            margin-bottom: 1.5rem;
+        }
+
+        .content-body ul {
+            margin-right: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-body li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-right: 1.5rem;
+        }
+
+        .content-body li::before {
+            content: '•';
+            color: var(--primary-color);
+            font-weight: bold;
+            position: absolute;
+            right: 0;
+        }
+
+        .download-section {
+            background: var(--background-light);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            background: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-icon">❄️</div>
+                <span class="logo-text">السحابة الباردة</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="services.html" class="nav-link">الخدمات</a>
+                </li>
+                <li class="nav-item">
+                    <a href="library.html" class="nav-link active">المكتبة</a>
+                </li>
+                <li class="nav-item">
+                    <a href="calculations.html" class="nav-link">الحسابات</a>
+                </li>
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link">لوحة التحكم</a>
+                </li>
+            </ul>
+
+            <div class="nav-buttons">
+                <a href="login.html" class="btn btn-outline">تسجيل الدخول</a>
+                <a href="register.html" class="btn btn-primary">إنشاء حساب</a>
+            </div>
+
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- هيدر المكتبة -->
+    <section class="library-hero">
+        <div class="container">
+            <h1>المكتبة التعليمية</h1>
+            <p class="section-subtitle">مصادر تعليمية شاملة ومتخصصة في مجال التدفئة والتهوية وتكييف الهواء</p>
+            
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="ابحث في المكتبة...">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الفلترة -->
+    <section class="library-filters">
+        <div class="container">
+            <div class="filter-group">
+                <button class="filter-btn active" data-filter="all">الكل</button>
+                <button class="filter-btn" data-filter="article">مقالات</button>
+                <button class="filter-btn" data-filter="video">فيديوهات</button>
+                <button class="filter-btn" data-filter="tutorial">دروس</button>
+                <button class="filter-btn" data-filter="guide">إرشادات</button>
+                <button class="filter-btn" data-filter="manual">كتيبات</button>
+            </div>
+            
+            <div class="filter-group">
+                <button class="filter-btn" data-category="all">جميع التصنيفات</button>
+                <button class="filter-btn" data-category="installation">التركيب</button>
+                <button class="filter-btn" data-category="maintenance">الصيانة</button>
+                <button class="filter-btn" data-category="troubleshooting">استكشاف الأخطاء</button>
+                <button class="filter-btn" data-category="safety">السلامة</button>
+                <button class="filter-btn" data-category="theory">النظري</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- محتوى المكتبة -->
+    <section class="library-content">
+        <div class="container">
+            <div class="content-grid">
+                <!-- مقال 1 -->
+                <div class="content-card" data-type="article" data-category="maintenance">
+                    <div class="card-image">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">صيانة</span>
+                        <h3 class="card-title">الدليل الشامل للصيانة الوقائية لأنظمة التكييف</h3>
+                        <p class="card-description">
+                            دليل مفصل يغطي جميع جوانب الصيانة الوقائية لأنظمة التكييف المركزية والمنفصلة، 
+                            مع جداول زمنية وفحوصات دورية.
+                        </p>
+                        <div class="card-meta">
+                            <div class="card-stats">
+                                <span class="stat">
+                                    <i class="far fa-clock"></i>
+                                    15 دقيقة
+                                </span>
+                                <span class="stat">
+                                    <i class="far fa-eye"></i>
+                                    1,245
+                                </span>
+                            </div>
+                            <a href="#" class="read-btn">قراءة</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- مقال 2 -->
+                <div class="content-card" data-type="video" data-category="installation">
+                    <div class="card-image">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">تركيب</span>
+                        <h3 class="card-title">تركيب أنظمة التكييف المركزي خطوة بخطوة</h3>
+                        <p class="card-description">
+                            فيديو تعليمي مفصل يشرح عملية تركيب أنظمة التكييف المركزي من التخطيط حتى التشغيل.
+                        </p>
+                        <div class="card-meta">
+                            <div class="card-stats">
+                                <span class="stat">
+                                    <i class="far fa-clock"></i>
+                                    25 دقيقة
+                                </span>
+                                <span class="stat">
+                                    <i class="far fa-eye"></i>
+                                    892
+                                </span>
+                            </div>
+                            <a href="#" class="read-btn">مشاهدة</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- مقال 3 -->
+                <div class="content-card" data-type="guide" data-category="troubleshooting">
+                    <div class="card-image">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">استكشاف الأخطاء</span>
+                        <h3 class="card-title">دليل استكشاف أعطال الضواغط وإصلاحها</h3>
+                        <p class="card-description">
+                            دليل شامل لاستكشاف وإصلاح أعطال ضواغط التبريد مع شرح الأسباب والحلول العملية.
+                        </p>
+                        <div class="card-meta">
+                            <div class="card-stats">
+                                <span class="stat">
+                                    <i class="far fa-clock"></i>
+                                    20 دقيقة
+                                </span>
+                                <span class="stat">
+                                    <i class="fas fa-download"></i>
+                                    156
+                                </span>
+                            </div>
+                            <a href="#" class="read-btn">تحميل</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- مقال 4 -->
+                <div class="content-card" data-type="tutorial" data-category="safety">
+                    <div class="card-image">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">سلامة</span>
+                        <h3 class="card-title">إجراءات السلامة في التعامل مع غازات التبريد</h3>
+                        <p class="card-description">
+                            درس تفاعلي يغطي إجراءات السلامة الواجب اتباعها عند التعامل مع غازات التبريد المختلفة.
+                        </p>
+                        <div class="card-meta">
+                            <div class="card-stats">
+                                <span class="stat">
+                                    <i class="far fa-clock"></i>
+                                    30 دقيقة
+                                </span>
+                                <span class="stat">
+                                    <i class="far fa-eye"></i>
+                                    734
+                                </span>
+                            </div>
+                            <a href="#" class="read-btn">بدء الدرس</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- مقال 5 -->
+                <div class="content-card" data-type="manual" data-category="theory">
+                    <div class="card-image">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">نظري</span>
+                        <h3 class="card-title">أسس ديناميكا الحرارة في أنظمة التبريد</h3>
+                        <p class="card-description">
+                            كتيب نظري متقدم يشرح المبادئ الأساسية لديناميكا الحرارة وتطبيقاتها في أنظمة التبريد.
+                        </p>
+                        <div class="card-meta">
+                            <div class="card-stats">
+                                <span class="stat">
+                                    <i class="far fa-clock"></i>
+                                    45 دقيقة
+                                </span>
+                                <span class="stat">
+                                    <i class="fas fa-download"></i>
+                                    321
+                                </span>
+                            </div>
+                            <a href="#" class="read-btn">تحميل</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- مقال 6 -->
+                <div class="content-card" data-type="article" data-category="maintenance">
+                    <div class="card-image">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">صيانة</span>
+                        <h3 class="card-title">تنظيف وصيانة المبادلات الحرارية</h3>
+                        <p class="card-description">
+                            دليل عملي لتنظيف وصيانة المبادلات الحرارية في أنظمة التكييف لضمان كفاءة الطاقة.
+                        </p>
+                        <div class="card-meta">
+                            <div class="card-stats">
+                                <span class="stat">
+                                    <i class="far fa-clock"></i>
+                                    18 دقيقة
+                                </span>
+                                <span class="stat">
+                                    <i class="far fa-eye"></i>
+                                    567
+                                </span>
+                            </div>
+                            <a href="#" class="read-btn">قراءة</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- التصفح -->
+            <div class="pagination">
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">4</button>
+                <button class="page-btn">5</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم المحتوى المميز -->
+    <section class="featured-content">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">المحتوى المميز</h2>
+                <p class="section-subtitle">أهم الموارد التعليمية التي يوصى بها للمهندسين والفنيين</p>
+            </div>
+
+            <div class="content-detail">
+                <div class="detail-header">
+                    <h2>الدليل الشامل لأنظمة VRV و VRF</h2>
+                    <div class="detail-meta">
+                        <span class="meta-item">
+                            <i class="far fa-clock"></i>
+                            وقت القراءة: 40 دقيقة
+                        </span>
+                        <span class="meta-item">
+                            <i class="far fa-calendar"></i>
+                            آخر تحديث: 15 مارس 2024
+                        </span>
+                        <span class="meta-item">
+                            <i class="far fa-user"></i>
+                            د. أحمد محمد
+                        </span>
+                    </div>
+                </div>
+
+                <div class="content-body">
+                    <h3>مقدمة عن أنظمة VRV/VRF</h3>
+                    <p>
+                        أنظمة VRV (Variable Refrigerant Volume) و VRF (Variable Refrigerant Flow) تمثل 
+                        تطوراً هاماً في مجال أنظمة التكييف، حيث توفر مرونة عالية في التحكم وتوفير الطاقة.
+                    </p>
+
+                    <h3>المميزات الرئيسية</h3>
+                    <ul>
+                        <li>كفاءة طاقة عالية تصل إلى 30% مقارنة بالأنظمة التقليدية</li>
+                        <li>مرونة في التصميم والتركيب</li>
+                        <li>تحكم فردي في كل وحدة داخلية</li>
+                        <li>تقليل مساحة المعدات</li>
+                        <li>تشغيل هادئ ومريح</li>
+                    </ul>
+
+                    <h3>مجالات التطبيق</h3>
+                    <p>
+                        تناسب هذه الأنظمة المباني التجارية، الفنادق، المستشفيات، والمباني السكنية الفاخرة 
+                        التي تتطلب تحكماً دقيقاً في درجات الحرارة.
+                    </p>
+
+                    <div class="download-section">
+                        <h4>الملفات المرفقة</h4>
+                        <p>يمكنك تحميل الدليل الكامل والجداول الفنية من الروابط التالية:</p>
+                        <a href="#" class="download-btn">
+                            <i class="fas fa-download"></i>
+                            تحميل الدليل الشامل (PDF)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <!-- نفس الفوتر السابق -->
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/library.js"></script>
+</body>
+</html>

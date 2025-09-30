@@ -1,1 +1,597 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - السحابة الباردة</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        .dashboard {
+            margin-top: 80px;
+            background: var(--background-light);
+            min-height: calc(100vh - 80px);
+        }
 
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .sidebar {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+
+        .user-profile {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .user-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .user-role {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .welcome-banner {
+            background: var(--gradient);
+            color: white;
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .welcome-banner h1 {
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--background-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .services-section {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .services-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .services-table th,
+        .services-table td {
+            padding: 1rem;
+            text-align: right;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .services-table th {
+            background: var(--background-light);
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .status-badge {
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .status-in-progress {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .status-completed {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .action-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+
+        .action-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .recent-activity {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--background-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+            color: var(--text-dark);
+        }
+
+        .activity-time {
+            color: var(--text-light);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-icon">❄️</div>
+                <span class="logo-text">السحابة الباردة</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="services.html" class="nav-link">الخدمات</a>
+                </li>
+                <li class="nav-item">
+                    <a href="library.html" class="nav-link">المكتبة</a>
+                </li>
+                <li class="nav-item">
+                    <a href="calculations.html" class="nav-link">الحسابات</a>
+                </li>
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link active">لوحة التحكم</a>
+                </li>
+            </ul>
+
+            <div class="nav-buttons">
+                <div class="user-menu">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-user"></i>
+                        أحمد محمد
+                    </button>
+                </div>
+            </div>
+
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard">
+        <div class="dashboard-container">
+            <!-- الشريط الجانبي -->
+            <aside class="sidebar">
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-name">أحمد محمد</div>
+                    <div class="user-role">عميل - شركة التقنية المثالية</div>
+                </div>
+
+                <ul class="sidebar-nav">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active">
+                            <i class="fas fa-home"></i>
+                            النظرة العامة
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-tools"></i>
+                            خدماتي
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-plus-circle"></i>
+                            طلب خدمة جديدة
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-book"></i>
+                            مكتبتي
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-calculator"></i>
+                            حساباتي
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-file-invoice"></i>
+                            الفواتير
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-cog"></i>
+                            الإعدادات
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i class="fas fa-sign-out-alt"></i>
+                            تسجيل الخروج
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+
+            <!-- المحتوى الرئيسي -->
+            <main class="main-content">
+                <!-- رسالة ترحيب -->
+                <div class="welcome-banner">
+                    <h1>مرحباً بعودتك، أحمد! 👋</h1>
+                    <p>لديك 3 خدمات نشطة تحتاج لمتابعة</p>
+                </div>
+
+                <!-- إحصائيات سريعة -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">الخدمات النشطة</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-number">24</div>
+                        <div class="stat-label">الخدمات المكتملة</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">في الانتظار</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">المقالات المقروءة</div>
+                    </div>
+                </div>
+
+                <!-- الخدمات الحديثة -->
+                <div class="services-section">
+                    <div class="section-header">
+                        <h2>الخدمات الحديثة</h2>
+                        <a href="#" class="btn btn-outline">عرض الكل</a>
+                    </div>
+
+                    <table class="services-table">
+                        <thead>
+                            <tr>
+                                <th>رقم الخدمة</th>
+                                <th>نوع الخدمة</th>
+                                <th>التاريخ</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#SC-2024-001</td>
+                                <td>صيانة وقائية</td>
+                                <td>15/03/2024</td>
+                                <td>
+                                    <span class="status-badge status-in-progress">قيد التنفيذ</span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline btn-small">تفاصيل</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#SC-2024-002</td>
+                                <td>إصلاح عطل</td>
+                                <td>10/03/2024</td>
+                                <td>
+                                    <span class="status-badge status-completed">مكتمل</span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline btn-small">تفاصيل</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#SC-2024-003</td>
+                                <td>استشارة فنية</td>
+                                <td>05/03/2024</td>
+                                <td>
+                                    <span class="status-badge status-pending">في الانتظار</span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline btn-small">تفاصيل</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- الإجراءات السريعة -->
+                <div class="section-header">
+                    <h2>الإجراءات السريعة</h2>
+                </div>
+                <div class="quick-actions">
+                    <div class="action-card" onclick="location.href='services.html'">
+                        <div class="action-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <h3>طلب خدمة جديدة</h3>
+                        <p>اطلب خدمة صيانة أو إصلاح</p>
+                    </div>
+                    <div class="action-card" onclick="location.href='library.html'">
+                        <div class="action-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3>المكتبة التعليمية</h3>
+                        <p>استكشف المصادر التعليمية</p>
+                    </div>
+                    <div class="action-card" onclick="location.href='calculations.html'">
+                        <div class="action-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h3>الأدوات الحسابية</h3>
+                        <p>استخدم حاسباتنا المتخصصة</p>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-file-invoice"></i>
+                        </div>
+                        <h3>الفواتير</h3>
+                        <p>عرض وتحميل الفواتير</p>
+                    </div>
+                </div>
+
+                <!-- النشاط الحديث -->
+                <div class="recent-activity">
+                    <div class="section-header">
+                        <h2>النشاط الحديث</h2>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">تم تعيين موعد للصيانة</div>
+                                <div class="activity-time">منذ ساعتين</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">تم رفع تقرير الخدمة #SC-2024-001</div>
+                                <div class="activity-time">منذ 5 ساعات</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">قمت بقراءة مقال عن الصيانة الوقائية</div>
+                                <div class="activity-time">منذ يوم</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">تم حفظ حساب BTU جديد</div>
+                                <div class="activity-time">منذ يومين</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <!-- نفس الفوتر السابق -->
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html> 

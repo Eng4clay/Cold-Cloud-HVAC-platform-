@@ -1,1 +1,474 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب - السحابة الباردة</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            padding: 2rem;
+        }
 
+        .auth-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .auth-header {
+            background: var(--gradient);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .auth-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .auth-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-subtitle {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .auth-body {
+            padding: 2rem;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-input {
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .password-input {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        .password-strength {
+            margin-top: 0.5rem;
+        }
+
+        .strength-bar {
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .strength-fill {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s;
+        }
+
+        .strength-text {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .form-options {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .terms-link {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .auth-button {
+            background: var(--gradient);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .auth-button:hover {
+            background: var(--gradient-dark);
+            transform: translateY(-2px);
+        }
+
+        .auth-divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .auth-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            left: 0;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .auth-divider span {
+            background: white;
+            padding: 0 1rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 500;
+        }
+
+        .social-btn:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .auth-footer {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .auth-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .step {
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .step.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .step.completed {
+            background: var(--success-color);
+            color: white;
+            border-color: var(--success-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <div class="logo-icon">❄️</div>
+                    <span>السحابة الباردة</span>
+                </div>
+                <h1 class="auth-title">أنشئ حسابك الجديد</h1>
+                <p class="auth-subtitle">انضم إلى منصتنا وابدأ رحلتك مع حلول HVAC المتكاملة</p>
+            </div>
+
+            <div class="auth-body">
+                <!-- مؤشر الخطوات -->
+                <div class="step-indicator">
+                    <div class="step active">1</div>
+                    <div class="step">2</div>
+                    <div class="step">3</div>
+                </div>
+
+                <form class="auth-form" id="registerForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName" class="form-label">الاسم الأول</label>
+                            <input type="text" id="firstName" class="form-input" placeholder="ادخل اسمك الأول" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" class="form-label">اسم العائلة</label>
+                            <input type="text" id="lastName" class="form-input" placeholder="ادخل اسم العائلة" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">البريد الإلكتروني</label>
+                        <input type="email" id="email" class="form-input" placeholder="ادخل بريدك الإلكتروني" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone" class="form-label">رقم الهاتف</label>
+                        <input type="tel" id="phone" class="form-input" placeholder="ادخل رقم هاتفك" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company" class="form-label">الشركة (اختياري)</label>
+                        <input type="text" id="company" class="form-input" placeholder="اسم الشركة">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="userType" class="form-label">نوع المستخدم</label>
+                        <select id="userType" class="form-input" required>
+                            <option value="">اختر نوع المستخدم</option>
+                            <option value="client">عميل</option>
+                            <option value="technician">فني</option>
+                            <option value="engineer">مهندس</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">كلمة المرور</label>
+                        <div class="password-input">
+                            <input type="password" id="password" class="form-input" placeholder="اختر كلمة مرور قوية" required 
+                                   oninput="checkPasswordStrength()">
+                            <button type="button" class="toggle-password" onclick="togglePassword('password')">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="password-strength">
+                            <div class="strength-bar">
+                                <div class="strength-fill" id="strengthFill"></div>
+                            </div>
+                            <div class="strength-text" id="strengthText">قوة كلمة المرور</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword" class="form-label">تأكيد كلمة المرور</label>
+                        <div class="password-input">
+                            <input type="password" id="confirmPassword" class="form-input" placeholder="أعد إدخال كلمة المرور" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('confirmPassword')">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <label for="agreeTerms">
+                            أوافق على <a href="terms.html" class="terms-link">الشروط والأحكام</a> 
+                            و <a href="privacy.html" class="terms-link">سياسة الخصوصية</a>
+                        </label>
+                    </div>
+
+                    <div class="form-options">
+                        <input type="checkbox" id="newsletter">
+                        <label for="newsletter">
+                            أرغب في تلقي النشرة الإخبارية والعروض الخاصة
+                        </label>
+                    </div>
+
+                    <button type="submit" class="auth-button">
+                        <i class="fas fa-user-plus"></i>
+                        إنشاء الحساب
+                    </button>
+                </form>
+
+                <div class="auth-divider">
+                    <span>أو</span>
+                </div>
+
+                <div class="social-login">
+                    <button class="social-btn">
+                        <i class="fab fa-google" style="color: #DB4437;"></i>
+                        Google
+                    </button>
+                    <button class="social-btn">
+                        <i class="fab fa-microsoft" style="color: #0078D4;"></i>
+                        Microsoft
+                    </button>
+                </div>
+
+                <div class="auth-footer">
+                    <p>لديك حساب بالفعل؟ <a href="login.html" class="auth-link">سجل الدخول هنا</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        function togglePassword(fieldId) {
+            const passwordInput = document.getElementById(fieldId);
+            const toggleIcon = passwordInput.parentNode.querySelector('.toggle-password i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.className = 'far fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.className = 'far fa-eye';
+            }
+        }
+
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strengthFill = document.getElementById('strengthFill');
+            const strengthText = document.getElementById('strengthText');
+            
+            let strength = 0;
+            let text = 'قوة كلمة المرور';
+            let color = '#ef4444';
+
+            // تحقق من طول كلمة المرور
+            if (password.length >= 8) strength += 25;
+            
+            // تحقق من وجود أحرف كبيرة وصغيرة
+            if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 25;
+            
+            // تحقق من وجود أرقام
+            if (password.match(/([0-9])/)) strength += 25;
+            
+            // تحقق من وجود رموز خاصة
+            if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 25;
+
+            // تحديث شريط القوة
+            strengthFill.style.width = strength + '%';
+            
+            // تحديث النص واللون
+            if (strength >= 75) {
+                text = 'قوية جداً';
+                color = '#10b981';
+            } else if (strength >= 50) {
+                text = 'جيدة';
+                color = '#f59e0b';
+            } else if (strength >= 25) {
+                text = 'ضعيفة';
+                color = '#ef4444';
+            } else {
+                text = 'ضعيفة جداً';
+                color = '#ef4444';
+            }
+            
+            strengthFill.style.background = color;
+            strengthText.textContent = text;
+            strengthText.style.color = color;
+        }
+
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // تحقق من تطابق كلمات المرور
+            if (password !== confirmPassword) {
+                ColdCloud.showNotification('كلمات المرور غير متطابقة!', 'error');
+                return;
+            }
+            
+            // تحقق من قوة كلمة المرور
+            if (password.length < 8) {
+                ColdCloud.showNotification('كلمة المرور يجب أن تكون 8 أحرف على الأقل!', 'error');
+                return;
+            }
+            
+            // محاكاة عملية التسجيل
+            ColdCloud.showNotification('تم إنشاء الحساب بنجاح!', 'success');
+            
+            // توجيه إلى صفحة الدخول بعد ثانيتين
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

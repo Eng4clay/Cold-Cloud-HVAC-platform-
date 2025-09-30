@@ -227,3 +227,32 @@ window.ColdCloud = {
     formatPhoneNumber,
     validateEmail
 };
+} 
+// تحديث نظام التنقل بناءً على حالة المصادقة
+function updateNavigation() {
+    const authSystem = window.authSystem;
+    if (!authSystem) return;
+
+    const currentUser = authSystem.getCurrentUser();
+    const navButtons = document.querySelector('.nav-buttons');
+    const userMenu = document.querySelector('.user-menu');
+
+    if (currentUser && navButtons && userMenu) {
+        navButtons.style.display = 'none';
+        userMenu.style.display = 'flex';
+        
+        // تحديث اسم المستخدم
+        const userNameElement = userMenu.querySelector('.user-name');
+        if (userNameElement) {
+            userNameElement.textContent = `${currentUser.firstName} ${currentUser.lastName}`;
+        }
+    } else if (navButtons && userMenu) {
+        navButtons.style.display = 'flex';
+        userMenu.style.display = 'none';
+    }
+}
+
+// تحديث التنقل عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(updateNavigation, 100);
+});

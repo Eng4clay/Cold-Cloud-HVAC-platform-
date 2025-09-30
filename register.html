@@ -469,6 +469,44 @@
                 window.location.href = 'login.html';
             }, 2000);
         });
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // جمع بيانات النموذج
+    const formData = new FormData(e.target);
+    const userData = {
+        firstName: formData.get('firstName'),
+        lastName: formData.get('lastName'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        company: formData.get('company'),
+        userType: formData.get('userType'),
+        password: formData.get('password')
+    };
+
+    // التحقق من أن كلمة المرور متطابقة
+    if (userData.password !== formData.get('confirmPassword')) {
+        alert('كلمات المرور غير متطابقة');
+        return;
+    }
+
+    // حفظ المستخدم في localStorage
+    let users = JSON.parse(localStorage.getItem('users') || '[]');
+    // التحقق من عدم وجود مستخدم بنفس البريد الإلكتروني
+    if (users.find(user => user.email === userData.email)) {
+        alert('هذا البريد الإلكتروني مسجل مسبقًا');
+        return;
+    }
+
+    users.push(userData);
+    localStorage.setItem('users', JSON.stringify(users));
+
+    // تسجيل الدخول تلقائياً
+    localStorage.setItem('currentUser', JSON.stringify(userData));
+
+    // توجيه إلى لوحة التحكم
+    window.location.href = 'dashboard.html';
+         });
     </script>
 </body>
 </html>
